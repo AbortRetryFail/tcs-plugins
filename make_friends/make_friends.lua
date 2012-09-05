@@ -42,6 +42,7 @@ mf.presets = {}
 
 --LastAggro crap
 mf.LastAggro.timeout = 300
+mf.LastAggro.mycharid = GetCharacterID() -- Avoid repeated calls during events.
 --Functional functions
 mf.GetFriendlyStatus_OLD = GetFriendlyStatus
 local tSaS = tcs.StringAtStart
@@ -350,24 +351,32 @@ function mf.GetFriends()
 	mf.invalidate_conq_status(nil, nil)
 end
 
+-- This function needs to be leaner. This event gets fired repeatedy when being
+-- hit by weapons like gats or popcorn.
 function mf.LastAggro:OnEvent(event, victim, aggressor)
-	victim = victim or GetCharacterID() or 1
-	aggressor = aggressor or GetCharacterIDByName(GetTargetInfo()) or 1
-	if(victim == GetCharacterID()) then
-		if(not mf.LastAggro[aggressor]) then
-			mf.LastAggro[aggressor] = { name = GetPlayerName(aggressor),lasthit = os.time() }
-		else
-			mf.LastAggro[aggressor]["lasthit"] = os.time()
-		end
-	end
+	victim = victim or mf.mycharid 
+    if aggressor and victim == mf.mycharid then
+        mf.LastAggro[aggressor] = { name = nil, lasthit = os.time() } -- Name lookups can wait
+    end
+	--aggressor = aggressor or GetCharacterIDByName(GetTargetInfo()) or 1
+	--if(victim == GetCharacterID()) then
+	--	if(not mf.LastAggro[aggressor]) then
+	--		mf.LastAggro[aggressor] = { name = GetPlayerName(aggressor),lasthit = os.time() }
+	--	else
+	--		mf.LastAggro[aggressor]["lasthit"] = os.time()
+	--	end
+	--end
 end
 RegisterEvent(mf.LastAggro, "PLAYER_GOT_HIT")
-RegisterEvent(mf.LastAggro, "PLAYER_HIT")
+RegisterEvent(mf.LastAggro, "PLAYER_HIT") -- Really?
 
 function mf.LastAggro.Reset(kind)
 	--just like parrotorcarrot!
 	local player_or_npc = ((kind=="player" and 1) or (kind=="npc" and 2) or 3)
 	for agg, last in pairs(mf.LastAggro) do
+        if not last.name then
+            last.name = GetPlayerName(agg)
+        end
 		if(type(last) == "table" and last.lasthit and last.name) then
 			if(player_or_npc == 1 and not tSaS(last.name, "*")) then
 				--Players only!

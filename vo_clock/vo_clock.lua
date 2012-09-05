@@ -8,7 +8,7 @@ tcs.clock.PDAformat = gkini.ReadString("tcs", "clock.PDAformat", "!%H:%M %A, %b.
 tcs.clock.timeformat = gkini.ReadString("tcs", "clock.timeformat", "!Current time: %H:%M:%S %A, %b. %d %Y")
 tcs.clock.HUDformat = gkini.ReadString("tcs", "clock.HUDformat", "!%H:%M")
 tcs.clock.freq = gkini.ReadInt("tcs","clock.pollingfreq", 500)
-tcs.clock.curstate = gkini.ReadInt("tcs", "clock.enabled", 1)
+tcs.clock.curstate = gkini.ReadInt("tcs", "clock.enabled", 0)
  
  
 function tcs.clock.UpdateTimes()
