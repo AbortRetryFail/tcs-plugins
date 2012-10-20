@@ -47,15 +47,17 @@ function tcs.clock.CreateTimeAreas(scale)
 		}
 		 
 		
-		iup.Append(tcs.GetRelative(StationCurrentLocationInfo, 1), tcs.clock.Stationmain)
-		iup.Append(tcs.GetRelative(PDACurrentLocationInfo, 1), tcs.clock.PDAmain)
-		iup.Append(tcs.GetRelative(CapShipCurrentLocationInfo, 1), tcs.clock.CapShipmain)
-		tcs.clock.Stationmain:show()
-		tcs.clock.PDAmain:show()
-		tcs.clock.CapShipmain:show()
-		iup.Refresh(tcs.GetRelative(StationCurrentLocationInfo, 1))
-		iup.Refresh(tcs.GetRelative(PDACurrentLocationInfo, 1))
-		iup.Refresh(tcs.GetRelative(CapShipCurrentLocationInfo, 1))
+		if iup.GetParent(StationCurrentLocationInfo) then
+            iup.Append(tcs.GetRelative(StationCurrentLocationInfo, 1), tcs.clock.Stationmain)
+		    iup.Append(tcs.GetRelative(PDACurrentLocationInfo, 1), tcs.clock.PDAmain)
+		    iup.Append(tcs.GetRelative(CapShipCurrentLocationInfo, 1), tcs.clock.CapShipmain)
+		    tcs.clock.Stationmain:show()
+		    tcs.clock.PDAmain:show()
+		    tcs.clock.CapShipmain:show()
+		    iup.Refresh(tcs.GetRelative(StationCurrentLocationInfo, 1))
+		    iup.Refresh(tcs.GetRelative(PDACurrentLocationInfo, 1))
+		    iup.Refresh(tcs.GetRelative(CapShipCurrentLocationInfo, 1))
+        end
 	end
 	
 	tcs.clock.HUDTime = nil
@@ -206,9 +208,11 @@ function tcs.clock.state(_, v)
 		iup.Detach(tcs.clock.HUDmain)
 		iup.Detach(tcs.clock.Stationmain)
 		iup.Detach(tcs.clock.CapShipmain)
-		iup.Refresh(tcs.GetRelative(StationCurrentLocationInfo, 1))
-		iup.Refresh(tcs.GetRelative(PDACurrentLocationInfo, 1))
-		iup.Refresh(tcs.GetRelative(CapShipCurrentLocationInfo, 1))
+        if iup.GetParent(StationCurrentLocationInfo) then -- nil if using Android and the condensed/phone PDA UI.
+		    iup.Refresh(tcs.GetRelative(StationCurrentLocationInfo, 1))
+		    iup.Refresh(tcs.GetRelative(PDACurrentLocationInfo, 1))
+		    iup.Refresh(tcs.GetRelative(CapShipCurrentLocationInfo, 1))
+        end
 		tcs.clock.curstate = 0
 		gkini.WriteInt("tcs", "clock.enabled", 0)
 	elseif v == -1 then
