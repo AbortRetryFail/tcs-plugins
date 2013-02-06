@@ -15,7 +15,7 @@ function tcs.misc.local_standing:OnEvent(e)
 	if GetSectorAlignment()  == 0 then tcs.misc.hudstand.title = "\127555555Unaligned" return end
 	local standing = GetPlayerFactionStanding("sector", GetCharacterID())
 	local fcolor = "\127"..tcs.RGBToHex(tcs.factionfriendlynesscolor(standing))
-	tcs.misc.hudstand.title = fcolor..FactionMonitorStr[GetSectorMonitoredStatus() or 1]
+	tcs.misc.hudstand.title = fcolor..(FactionMonitorStr[GetSectorMonitoredStatus()] or "Unmonitored")
 end
 
 function tcs.misc.local_standing.state(_, v)
