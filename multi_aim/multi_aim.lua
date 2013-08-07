@@ -95,7 +95,7 @@ function tcs.multiaim.CreateLeadoffArrows()
 	end
 	iup.Detach(HUD.leadoff_arrow)
 	--tcs.leadoff_arrow = iup.hbox { HUD.leadoff_arrow }
-	iup.Destroy(HUD.leadoff_arrow)
+	iup.Destroy(HUD.leadoff_arrow) -- Is this really necessary? 
 	HUD.leadoff_arrow = iup.label { title = "" }
 	iup.Append(HUD.leadofflayer, HUD.leadoff_arrow)
 	--iup.Append(tcs.leadoff_arrow, iup.fill{})
@@ -136,6 +136,7 @@ function tcs.multiaim.UpdateLeadoffIcons()
 end
 
 function tcs.multiaim:OnEvent(event, data)
+	if not tcs.multiaim.state then return end-- If we're disabled, why do all of this?
 	if(event == "SHIP_SPAWNED") then
 		if(not tcs.multiaim.loaded) then
 			tcs.multiaim.CreateLeadoffArrows()

@@ -1,6 +1,43 @@
 tcs.mf.ui = {} --The help dialog
 local mui = tcs.mf.ui --Binding for main UI
-mui.halpmsg = "Welcome to Make Friends, the radar customization applet!\n\n\tThe main window lets you select what overall groups/factions appear red or green on your radar. If the toggle is colored red, it will appear red on your radar. Likewise if the toggle is colored green. \"Categories\" toggles and \"NPCs\" controls take precedence over \"Factions\" toggles- namely, if you have certain NPC's or your guildmates set as friendly/green, then you can't turn those NPCs or your guildmates red no matter what factions you configure to be hostile. \n\n\tA note about the \"Conquerable Assets\": MakeFriends doesn't yet have full support to figure out who has the right IFF settings in a conquerable sector, but it can figure out if the turrets hate you or not as long as the relevant key has a location formatted like 'Latos I-8' in the key name. Having MakeFriends treat the turrets \"As Player\" enables this logic. This logic does not affect station guards in conquerable sectors.\n\n\tThe Friends and Enemies lists windows allows you to specify people or guilds who are always green or always red on radar, respectively. The enemies list takes precedence over the friends list, so any person or guild on the enemies list is always red even if you have them put down in the friends list eighty times. To ignore your friends and enemies lists, for Nation War or some other team event, check the relevant toggles in the main window. Click on the \"Edit Lists\" button to access the edits for manual editing of these lists. Use the \"Edit People Lists\" button to manage individual players, and the \"Edit Guild Lists\" to manage guilds. Do not use quotes when entering players who have more than one word in their name, and on the guilds list, only use the acronym of a guild when adding entries.\n\n\tThe toggles on the bottom-left of the main window are used, respectively, to:\n\t\t- Pretend your enemy players list is empty\n\t\t- Pretend your enemy guilds list is empty\n\t\t- Pretend your friendly players list is empty\n\t\t- Pretend your friendly guilds list is empty\n\t\t- Take a player\'s faction standing into account when showing them on the radar\n\t\t- If you are hit by another player they will be red for the amount of time displayed\n\t\tin the box, and if you hit another player, your CURRENT TARGET will be red for\n\t\thowever many minutes are displayed in the box\n\n\tThe Save Presets button will prompt you for a name to save your current toggle settings as. WARNING: Save Presets button will overwrite presets without warning. \n\n\tEdit Presets allows you to load or delete presets, or load the \'current\' defaults. If you have no presets or have just loaded the default presets, any changes you make to the toggles in the main window will be reflected in the default preset once you hit \"OK\". It is suggested that you make the defaults a setting you usually fly around as, and use presets for special circumstances(such as events).\n\n\tLastly, hit \"OK\" to save everything and all that good stuff.\n\n\tFor more advanced users, you can also use the following commands to reset lists of people who have hit you and are thusly marked red.\n\t\t- /tcs makefriends reset player\n\t\t- /tcs makefriends reset npc\n\t\t- /tcs makefriends reset all\n\n\tThe commands are a bit slipshod, but do as they say on the tin. Good luck!\n\n\n\nCredits:\nWritten by Scuba Steve 9.0.\nPre-TCS version 1.3.1 modified by raybondo.\nAlertMachine interface created from modified whois code written by Eonis Jannar.\nHelpfile for Pre-TCS MF v1.5.0 updated by Miharu."
+mui.halpmsg = [[
+Welcome to Make Friends, the radar customization applet!
+
+	The main window lets you select what overall groups/factions appear red or green on your radar. If the toggle is colored red, it will appear red on your radar. Likewise if the toggle is colored green. "Categories" toggles and "NPCs" controls take precedence over "Factions" toggles- namely, if you have certain NPC's or your guildmates set as friendly/green, then you can't turn those NPCs or your guildmates red no matter what factions you configure to be hostile. 
+
+	A note about the "Conquerable Assets": MakeFriends doesn't yet have full support to figure out who has the right IFF settings in a conquerable sector, but it can figure out if the turrets hate you or not as long as the relevant key has a location formatted like 'Latos I-8' in the key name. Having MakeFriends treat the turrets "As Player" enables this logic. This logic does not affect station guards in conquerable sectors.
+
+	The Friends and Enemies lists windows allows you to specify people or guilds who are always green or always red on radar, respectively. The enemies list takes precedence over the friends list, so any person or guild on the enemies list is always red even if you have them put down in the friends list eighty times. To ignore your friends and enemies lists, for Nation War or some other team event, check the relevant toggles in the main window. Click on the "Edit Lists" button to access the edits for manual editing of these lists. Use the "Edit People Lists" button to manage individual players, and the "Edit Guild Lists" to manage guilds. Do not use quotes when entering players who have more than one word in their name, and on the guilds list, only use the acronym of a guild when adding entries.
+	The toggles on the bottom-left of the main window are used, respectively, to:
+		- Pretend your enemy players list is empty
+		- Pretend your enemy guilds list is empty
+		- Pretend your friendly players list is empty
+		- Pretend your friendly guilds list is empty
+		- Take a player's faction standing into account when showing them on the radar
+		- If you are hit by another player they will be red for the amount of time displayed
+		tin the box, and if you hit another player, your CURRENT TARGET will be red for
+		however many minutes are displayed in the box
+		
+	The Save Presets button will prompt you for a name to save your current toggle settings as. WARNING: Save Presets button will overwrite presets without warning. 
+	
+	Edit Presets allows you to load or delete presets, or load the 'current' defaults. If you have no presets or have just loaded the default presets, any changes you make to the toggles in the main window will be reflected in the default preset once you hit "OK". It is suggested that you make the defaults a setting you usually fly around as, and use presets for special circumstances(such as events).
+	
+	Lastly, hit "OK\" to save everything and all that good stuff.
+	
+	For more advanced users, you can also use the following commands to reset lists of people who have hit you and are thusly marked red.
+		- /tcs makefriends reset player
+		- /tcs makefriends reset npc
+		- /tcs makefriends reset all
+		
+	The commands are a bit slipshod, but do as they say on the tin. Good luck!
+	
+	
+	Credits:
+	Written by Scuba Steve 9.0.
+	Pre-TCS version 1.3.1 modified by raybondo.
+	AlertMachine interface created from modified whois code written by Eonis Jannar.
+	Helpfile for Pre-TCS MF v1.5.0 updated by Miharu.
+]]
 
 mui.mcontrols = {
 	--Only place elements with 'title' as a basic element in this group. Too lazy to actually add in the edge cases. Oh well.
@@ -9,7 +46,7 @@ mui.mcontrols = {
 	group = 	{"stationtoggle",{title = "Group Members",fgcolor="255 0 0"}},
 	buddies = 	{"stationtoggle",{title = "Buddies",fgcolor="255 0 0"}},
 	serco = 	{"stationtoggle", {title = "Serco Dominion",fgcolor="255 0 0" }},
-	itani = 	{"stationtoggle", {title = "Itani Nation",fgcolor="255 0 0" }},
+	itani = 	{"stationtoggle", {title = "Itani Nation",fgcolor="256 0 0" }},
 	uit = 		{"stationtoggle", {title = "Union of Independent Territories",fgcolor="255 0 0" }},
 	aeolus = 	{"stationtoggle", {title = "Aeolus Trading Prefectorate",fgcolor="255 0 0" }},
 	xangxi = 	{"stationtoggle", {title = "Xang Xi Automated Systems",fgcolor="255 0 0" }},
@@ -42,9 +79,10 @@ mui.mcontrols = {
 	igenemyguild = 		{"stationtoggle", {title = "Ignore Enemy Guilds List",fgcolor="255 255 255" }},
 	flaghostile = 		{"stationtoggle", {title = "Set hostiles red for ",fgcolor="255 255 255" }},
 	considerstanding =	{"stationtoggle", {title = "Consider Faction Standings.", fgcolor = "255 255 255" }},
-	groupstitle = 		{"label", {title="Categories"}},
+	groupstitle = 		{"label", {title = "Categories"}},
 	factionstitle = 	{"label", {title = "Factions"} },
 	npcstitle =			{"label", {title = "NPCs"} },
+	exceptionstitle =	{"label", {title = "Exceptions"} },
 	halpb = 			{"stationbutton", {title = "Help"}},
 	makefriendsb = 		{"stationbutton", {title = "OK"} },
 	closeb = 			{"stationbutton", {title = "Close"}},
@@ -123,13 +161,19 @@ local elems = {
 		},
 		iup.fill{}
 	},
-	iup.fill { size = "40" },
+	mui.exceptionstitle,
 	iup.hbox{
 		iup.vbox {
-			mui.igenemy,
-			mui.igenemyguild,
-			mui.igfriend,
-			mui.igfriendguild,
+			iup.hbox {
+				iup.vbox {
+					mui.igenemy,
+					mui.igenemyguild,
+				},
+				iup.vbox {
+					mui.igfriend,
+					mui.igfriendguild,
+				},
+			},
 			mui.considerstanding,
 			iup.hbox {
 				mui.flaghostile,

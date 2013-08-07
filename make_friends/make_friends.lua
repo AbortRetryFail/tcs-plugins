@@ -42,7 +42,6 @@ mf.presets = {}
 
 --LastAggro crap
 mf.LastAggro.timeout = 300
-mf.LastAggro.mycharid = GetCharacterID() -- Avoid repeated calls during events.
 --Functional functions
 mf.GetFriendlyStatus_OLD = GetFriendlyStatus
 local tSaS = tcs.StringAtStart
@@ -354,8 +353,8 @@ end
 -- This function needs to be leaner. This event gets fired repeatedy when being
 -- hit by weapons like gats or popcorn.
 function mf.LastAggro:OnEvent(event, victim, aggressor)
-	victim = victim or mf.mycharid 
-    if aggressor and victim == mf.mycharid then
+	victim = victim or GetCharacterID()
+    if aggressor and victim == GetCharacterID() then
         mf.LastAggro[aggressor] = { name = nil, lasthit = os.time() } -- Name lookups can wait
     end
 	--aggressor = aggressor or GetCharacterIDByName(GetTargetInfo()) or 1
