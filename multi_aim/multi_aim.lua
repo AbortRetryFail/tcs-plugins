@@ -22,6 +22,23 @@ tcs.multiaim.images = {
 	iup.LoadImage("hud_target5.png"),
 	iup.LoadImage("hud_target_over5.png")
 }
+tcs.multiaim.blacklist = {
+	["Cargo Scanner"] = true,
+	["Addon Scanner"] = true,
+	["Scanner"] = true,
+	["Free Mineral Scanner"] = true,
+	["Mineral Scanner"] = true,
+	["Improved Mineral Scanner"] = true,
+	["Advanced Mineral Scanner"] = true,
+	["Prototype Mineral Scanner"] = true,
+	["Scanner Blocker"] = true,
+	["Scanner Spoofer"] = true,
+	["Scanner Spoofer Mk2"] = true,
+	["Scanner Spoofer MkIII"] = true,
+	["Shared Group Radar Extender"] = true,
+	["Storm Radar Extender"] = true,
+	["Heavy Storm Radar Extender"] = true,
+}
 local function GenerateLeadoffIcon(portid)
 	local leadoff =  iup.radar {
 						type = "LEADOFF", 
@@ -106,20 +123,26 @@ end
 
 function tcs.multiaim.UpdateLeadoffArrowVisibility()
 	if not GetCharacterID() then return end
-	local first = false
-	HUD.leadofflayer.visible = "NO"
+	local equipped = false 
+	HUD.leadofflayer.visible = "NO" -- wtf Scuba, why is this backwards?
 	for portid in pairs(tcs.multiaim.leads) do
-		if((not GetActiveShipItemIDAtPort(portid)) or (tcs.multiaim.state == 0)) then
-			tcs.multiaim.leads[portid].icon.visible = "NO"
-			if(GetActiveShipItemIDAtPort(portid) and not first) then
-				tcs.leadoff_arrow.portid = portid
-				first = true
-			end
-		else
+		local itemid = GetActiveShipItemIDAtPort(portid)
+		local icon, name, qty, mass, desc, ldesc1, ldesc2, container, class, subtype = GetInventoryItemInfo(itemid)
+		test.print("Port#",portid)
+		test.print("ItemID:",itemid)
+		test.print("Name:",name)
+		if itemid -- Something is equipped
+		 	and (not tcs.multiaim.blacklist[name]) -- Omit scanners and stuff
+		 	and subtype ~= 5 -- Omit turret ports
+		then 
 			tcs.multiaim.leads[portid].icon.visible = "YES"
+			tcs.leadoff_arrow.portid = portid
+			equipped = true
+		else
+			tcs.multiaim.leads[portid].icon.visible = "NO"
 		end
 	end
-	if(tcs.multiaim.state == 1 or not first) then 
+	if(tcs.multiaim.state == 1 or not equipped) then 
 		tcs.leadofflayer.visible = "NO"
 	else
 		tcs.leadofflayer.visible = "YES"
