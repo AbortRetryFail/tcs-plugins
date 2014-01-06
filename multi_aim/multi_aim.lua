@@ -128,9 +128,6 @@ function tcs.multiaim.UpdateLeadoffArrowVisibility()
 	for portid in pairs(tcs.multiaim.leads) do
 		local itemid = GetActiveShipItemIDAtPort(portid)
 		local icon, name, qty, mass, desc, ldesc1, ldesc2, container, class, subtype = GetInventoryItemInfo(itemid)
-		test.print("Port#",portid)
-		test.print("ItemID:",itemid)
-		test.print("Name:",name)
 		if itemid -- Something is equipped
 		 	and (not tcs.multiaim.blacklist[name]) -- Omit scanners and stuff
 		 	and subtype ~= 5 -- Omit turret ports
