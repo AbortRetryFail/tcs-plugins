@@ -1,8 +1,8 @@
 --TCS Common Library. Used to be Ufuncs.
-tcs.VERSION = "1.4SUB2"
+tcs.VERSION = "1.4-ARF"
 
 --If you don't know the terrible secret of TCS, then this variable will do nothing for you.
-tcs.noSHA1 = true
+tcs.noSHA1 = true -- I am protected.
 
 
 function tcs.ERROR(str)
