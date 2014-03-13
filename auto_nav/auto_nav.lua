@@ -12,8 +12,8 @@ function tcs.autonav:OnEvent(event, data)
 		local name = GetTargetInfo()
 		if not name then return end
 		local msg = data['msg']
-		
-		if msg:match(name) then
+
+		if msg:match(name) or msg:match(name:match(".* Turret %((.*)%)")) then
 			tcs.autonav.system, tcs.autonav.sector = msg:match("jumped to (.*) System, Sector (.*)")
 			if tcs.autonav.system then
 				tcs.autonav.system = SystemNames[SystemNames[(tcs.autonav.system:match('(.+) ') or tcs.autonav.system):lower()]]
