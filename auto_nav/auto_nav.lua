@@ -9,11 +9,12 @@ tcs.autonav.verbose = gkini.ReadInt("tcs", "autonav.verbose", 1)
 
 function tcs.autonav:OnEvent(event, data)
 	if (event == "CHAT_MSG_SECTORD_SECTOR") and (tcs.autonav.follow == 1) then
-		local name = GetTargetInfo()
-		if not name then return end
+		local name = GetTargetInfo() 
 		local msg = data['msg']
+		if not (name and msg) then return end
+		local tname = name:match(".* Turret %((.*)%)")
 
-		if msg:match(name) or msg:match(name:match(".* Turret %((.*)%)")) then
+		if msg:match(name) or (tname and msg:match(tname)) then
 			tcs.autonav.system, tcs.autonav.sector = msg:match("jumped to (.*) System, Sector (.*)")
 			if tcs.autonav.system then
 				tcs.autonav.system = SystemNames[SystemNames[(tcs.autonav.system:match('(.+) ') or tcs.autonav.system):lower()]]
