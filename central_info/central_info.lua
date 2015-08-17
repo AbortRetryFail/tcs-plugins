@@ -162,7 +162,7 @@ function tcs.central.update()
 	--
 	--Sets turret HP
 	
-	if name and tcs.central.state == 1 then
+	if name and distance and tcs.central.state == 1 then
 		if prevdist == -1 then prevdist = distance else
 			dist_delta = distance - prevdist + (last_dist_delta or dist_delta or (distance - prevdist))/2
 			prevdist = distance
