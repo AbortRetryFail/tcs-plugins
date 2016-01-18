@@ -79,13 +79,22 @@ function mf.conq_sector_friendly_status()
 	return 0
 end
 
+-- Replacement for the game's GetFriendlyStatus
+-- Timer is to fire off UpdateRadarFriendlyStatus() after GetFriendlyStatus is called.
+
+local gfs_tm = Timer()
+
 function mf.GetFriendlyStatus(charid)
 	local name = string.lower(GetPlayerName(charid))
+	local nodeid = GetPlayerNodeID(charid)
 	local NPC = tSaS(name, "*")
 	local use_faction = false
 	local guild_tag = string.lower(GetGuildTag(charid))
 	local faction = GetPlayerFaction(charid) or 0
-	
+
+	-- Set timer for UpdateRadarFriendlyStatus()
+	gfs_tm:SetTimeout(64, function() UpdateRadarFriendlyStatus(nodeid) end)
+
 	local conq, statg, sf, border = nil, nil, nil, nil
 	if NPC then
 		conq = faction == 0 and name:match("turret %d*")
@@ -201,6 +210,7 @@ end
 
 --Let's go the easy way and make mf compatible with MakeFriends settings. So much easier for me.
 function mf.SaveSettings(preset)
+	UpdateAllRadarFriendlyStatus()
 	if(preset == nil) then
 		return
 	end
