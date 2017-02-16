@@ -114,11 +114,14 @@ RegisterEvent(tcs.e, "PLAYER_LOGGED_OUT")
 
 --Make sure to hide/show dialog for proper hudscale effects to take place
 function tcs.e:rHUDxscale(e)
-	if(HUD.dlg.visible == "YES") then
-		--iup.Refresh(HUD.dlg)
-		HideDialog(HUD.dlg)
-		ShowDialog(HUD.dlg)
-	end
+	local timer = Timer()
+	timer:SetTimeout(1, function() 
+		if(HUD.dlg.visible == "YES") then
+			--iup.Refresh(HUD.dlg)
+			HideDialog(HUD.dlg)
+			ShowDialog(HUD.dlg)
+		end
+	end)
 end
 
 function tcs.e:OnEvent(e)
